@@ -5,10 +5,6 @@ const koaBody = require('koa-bodyparser');
 const apiRouter = require('./router/router');
 const cors = require('@koa/cors');
 
-// const xhr = new XMLHttpRequest();
-// xhr.open("POST", "https://mighty-scrubland-96525.herokuapp.com/login", true);
-// xhr.setRequestHeader('Access-Control-Allow-Origin', '*');
-
 const app = new koa();
 // const host = process.env.HOST || '172.20.10.11';
 const PORT = process.env.PORT || 3000;
