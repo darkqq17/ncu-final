@@ -26,20 +26,12 @@ router
   .put('/course/delete', CourseController.deleteCourse)
   .get('/course/findall', CourseController.findallCourse)
 
-
 // UserInfo
 router
-  .get('/user/all', UserController.readAllUser)
-  .put('/user/create', UserController.createUser)
-  .put('/user/update', UserController.updateUser)
+  .put('/user', UserController.createUser)
+  .patch('/user', UserController.updateUser)
   .delete('/user/delete', UserController.deleteUser)
-  .get('/user/findall', UserController.findallUser)
-
-  .get("/user/signuppage", UserController.signuppageUser)
-  .post("/user/signup", UserController.signupUser)
-
-  .get("/user/loginpage", UserController.loginpageUser)
-  .get("/login", UserController.loginUser)
+  .post('/login', UserController.authUser)
   
 //DepartmentRule
 router
