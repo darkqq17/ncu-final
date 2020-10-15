@@ -5,10 +5,7 @@ const DepartmentController = require("../controllers/DepartmentController");
 const UserController = require("../controllers/UserController");
 const DepartmentruleController = require("../controllers/DepartmentRulesController");
 const CourseController = require("../controllers/CourseController");
-// const { a, b, c } = require() => a b c
-// const f = require() => f.a f.b f.c
 
-// http header contains '/api'
 const router = new Router({
   prefix: "/api",
 });
