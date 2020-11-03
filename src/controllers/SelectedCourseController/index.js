@@ -1,5 +1,11 @@
-const { userselected } = require("./create");
+const { userselected } = require("./read");
+const { createSelectedCourse } = require("./create");
+const { deleteSelectedCourse } = require("./delete");
+const { updateSelectedCourse } = require("./update");
 
 module.exports = {
-    userselected
+    createSelectedCourse,
+    deleteSelectedCourse,
+    userselected,
+    updateSelectedCourse,
 }

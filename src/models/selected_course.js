@@ -10,11 +10,11 @@ module.exports = function (sequelize, Sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
-      user_id: {
+      userInfoUserid: {
         type: Sequelize.INTEGER(11),
         allowNull: false
       },
-      selection_state: {
+      Selection_state: {
         type: Sequelize.STRING(45),
         allowNull: true
       },

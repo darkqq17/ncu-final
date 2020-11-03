@@ -1,15 +1,19 @@
 const SelectedCourse = require("./common");
 
-async function createSelectedCourse(ctx) {
-    await SelectedCourse.create({
+async function updateSelectedCourse(ctx) {
+    SelectedCourse.update({
         selected_id: ctx.request.body.selected_id,
         Selection_state: ctx.request.body.Selection_state,
         course_fk: ctx.request.body.course_fk,
         course_score: ctx.request.body.course_score,
         userInfoUserid: ctx.request.body.userInfoUserid,
-    });
+    }, {
+        where: {
+            selected_id: ctx.request.body.selected_id,
+        }
+    })
 
-    ctx.body = createSelectedCourse ? {
+    ctx.body = updateSelectedCourse ? {
         status: "success",
         data: SelectedCourse
     } : {
@@ -18,7 +22,6 @@ async function createSelectedCourse(ctx) {
         }
 }
 
-
 module.exports = {
-    createSelectedCourse
+    updateSelectedCourse
 }

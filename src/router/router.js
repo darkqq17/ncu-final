@@ -28,7 +28,7 @@ router
 // UserInfo
 router
   .put('/user', UserController.createUser)
-  .patch('/user', UserController.updateUser)
+  .patch('/user/update', UserController.updateUser)
   .delete('/user/delete', UserController.deleteUser)
   .post('/login', UserController.authUser)
   
@@ -40,6 +40,9 @@ router
 
 //SelectedCourse
 router
-  .get("/selected/userselected", SelectedCourseController.userselected)
-  
+  .get('/selected/userselected', SelectedCourseController.userselected)
+  .put('/selected/create', SelectedCourseController.createSelectedCourse)
+  .delete('/selected/delete', SelectedCourseController.deleteSelectedCourse)
+  .patch('/selected/update', SelectedCourseController.updateSelectedCourse)
+
 module.exports = router;
