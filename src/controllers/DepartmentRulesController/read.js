@@ -4,13 +4,13 @@ async function readAllRule(ctx) {
   const allRule = await DepartmentRule.findAll();
   ctx.body = allRule
     ? {
-        status: "success",
-        data: allRule,
-      }
+      status: "success",
+      data: allRule,
+    }
     : {
-        status: "failed",
-        data: null,
-      };
+      status: "failed",
+      data: null,
+    };
   // ctx.redirect('/view/index.html');
 }
 

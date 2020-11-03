@@ -1,5 +1,4 @@
 const User = require("./common");
-const UserInfo = require("./common");
 
 async function createUser(ctx) {
     await User.create({

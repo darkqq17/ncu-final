@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const db = require("../../database");
 
-const DepartmentRule = require("../../models/user_info")(db, Sequelize); //////////////
+const DepartmentRule = require("../../models/department_rules")(db, Sequelize); 
 
 module.exports = DepartmentRule;

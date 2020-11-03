@@ -1,8 +1,12 @@
 const DepartmentRule = require("./common");
-
+const SelectedCourse = require("../SelectedCourseController/common");
+const UserInfo = require("../UserController/common");
+const DepartmentInfo = require("../DepartmentController/common");
+const sequelize = require("../../database");
+const selected_course = require("../../models/selected_course");
 require("../../database.js");
-const fs = require("fs");
-const UserInfo = require("../UserController/create");
+// const fs = require("fs");
+
 
 async function check() {
   switch (rule) {
@@ -19,37 +23,101 @@ async function check() {
   }
 }
 
-async function selectedcourseuser(ctx) {
-  db.user
-    .findAll({
-      include: [{ model: db.selectedcourse }],
+DepartmentInfo.hasMany(UserInfo,
+  {
+    // foreignkey: 'user_id',
+    as: 'Department'
+  })
+UserInfo.belongsTo(DepartmentInfo,
+  {
+    as: 'User'
+  })
+
+  DepartmentInfo.hasOne(DepartmentRule,
+    {
+      // foreignkey: 'user_id',
+      as: 'Rule'
     })
-    .then((user) => {
-      const resObj = user.map((user) => {
-        //tidy up the user data
-        return Object.assign(
-          {},
-          {
-            user_id: user.user_id,
-            username: user.user_realname,
-            department: user.user_department,
-            selectedcourse: user.selectedcourse.map((selectedcourse) => {
-              return Object.assign(
-                {},
-                {
-                  selection_id: selectedcourse.selection_id,
-                  selected_user: selectedcourse.selected_user,
-                  course_fk: selectedcourse.course_fk,
-                  course_score: selectedcourse.course_score,
-                }
-              );
-            }),
-          }
-        );
-      });
-    });
-  ctx.body(resObj);
+  DepartmentRule.belongsTo(DepartmentInfo,
+    {
+      as: 'Department'
+    })
+
+
+
+
+
+async function userdepartment(ctx) {
+
+  const UserDEP = await UserInfo.findAll(
+    {
+      subQuery: false,
+      // raw: true,
+      attributes: [
+        'user_id', 'user_realname'
+      ],
+      include: [
+        {
+          model: DepartmentInfo,
+          required: false,
+          as: 'User',
+          attributes: ['department_name'],
+          include: [
+            {
+              model: DepartmentRule,
+              required: false,
+              as: 'Rule',
+              attributes: ['rule_type','rule_content']
+            }
+          ]
+        },
+      ]
+    }
+  )
+
+  ctx.body = UserDEP
+    ? {
+      status: "success",
+      data: UserDEP
+    }
+    : {
+      status: "failed",
+      data: null
+    }
 }
+// async function selectedcourseuser(ctx) {
+//   db.user
+//     .findAll({
+//       include: [{ model: db.selectedcourse }],
+//     })
+//     .then((user) => {
+//       const resObj = user.map((user) => {
+//         //tidy up the user data
+//         return Object.assign(
+//           {},
+//           {
+//             user_id: user.user_id,
+//             username: user.user_realname,
+//             department: user.user_department,
+//             selectedcourse: user.selectedcourse.map((selectedcourse) => {
+//               return Object.assign(
+//                 {},
+//                 {
+//                   selection_id: selectedcourse.selection_id,
+//                   selected_user: selectedcourse.selected_user,
+//                   course_fk: selectedcourse.course_fk,
+//                   course_score: selectedcourse.course_score,
+//                 }
+//               );
+//             }),
+//           }
+//         );
+//       });
+//     });
+//   ctx.body(resObj);
+// }
+
+
 
 //1 source  =>1 target        target  is the model that contains a foreign id/key).
 
@@ -58,8 +126,8 @@ console.log(JSON.stringify(users, null, 2));
 */
 
 module.exports = {
+  userdepartment,
   check,
-  selectedcourseuser,
 };
 
 

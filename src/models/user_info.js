@@ -18,15 +18,15 @@ module.exports = function (sequelize, Sequelize) {
         type: Sequelize.STRING(45),
         allowNull: true,
       },
-      user_department: {
+      UserDepartmentId: {
         type: Sequelize.INTEGER(11),
         allowNull: true,
-        references: {
-          model: {
-            tableName: "department_info",
-          },
-          key: "department_id",
-        },
+        // references: {
+        //   model: {
+        //     tableName: "department_info",
+        //   },
+        //   key: "department_id",
+        // },
       },
       user_salt: {
         type: Sequelize.STRING(45),
@@ -55,5 +55,7 @@ module.exports = function (sequelize, Sequelize) {
     }
   );
   
+
+
   return UserInfo;
 };

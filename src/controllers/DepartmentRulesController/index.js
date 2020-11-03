@@ -1,11 +1,11 @@
 const { readAllRule } = require("./read");
 const { check } = require("./create");
-const { selectedcourseuser } = require("./create");
+const { userdepartment } = require("./create");
 
 module.exports = {
     readAllRule,
     check,
-    selectedcourseuser
+    userdepartment
 }
 /*const User = require("./common");
 

@@ -5,6 +5,8 @@ const DepartmentController = require("../controllers/DepartmentController");
 const UserController = require("../controllers/UserController");
 const DepartmentruleController = require("../controllers/DepartmentRulesController");
 const CourseController = require("../controllers/CourseController");
+const DepartmentRulesController = require("../controllers/DepartmentRulesController");
+const SelectedCourseController = require("../controllers/SelectedCourseController")
 
 const router = new Router({
   prefix: "/api",
@@ -33,6 +35,11 @@ router
 //DepartmentRule
 router
   .get("/departmentrule/all", DepartmentruleController.readAllRule)
-  .get("/departmentrule/user/rule", DepartmentruleController.check);
+  .get("/departmentrule/user/rule", DepartmentruleController.check)
+  .get("/departmentrule/user/dep", DepartmentruleController.userdepartment)
 
+//SelectedCourse
+router
+  .get("/selected/userselected", SelectedCourseController.userselected)
+  
 module.exports = router;
