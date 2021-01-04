@@ -1,10 +1,14 @@
 const { readAllRule } = require("./read");
-const { check } = require("./create");
+const { deleteDepartmentRule } = require("./delete");
+const { updateDepartmentRule } = require("./update");
 const { userdepartment } = require("./create");
+const { createDepartmentRule } = require("./create");
 
 module.exports = {
     readAllRule,
-    check,
+    createDepartmentRule,
+    deleteDepartmentRule,
+    updateDepartmentRule,
     userdepartment
 }
 /*const User = require("./common");

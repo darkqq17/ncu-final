@@ -18,15 +18,13 @@ module.exports = function (sequelize, Sequelize) {
         type: Sequelize.STRING(45),
         allowNull: true,
       },
+      user_intro: {
+        type: Sequelize.STRING(300),
+        allowNull: true,
+      },
       UserDepartmentId: {
         type: Sequelize.INTEGER(11),
         allowNull: true,
-        // references: {
-        //   model: {
-        //     tableName: "department_info",
-        //   },
-        //   key: "department_id",
-        // },
       },
       user_salt: {
         type: Sequelize.STRING(45),

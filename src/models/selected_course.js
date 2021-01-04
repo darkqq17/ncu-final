@@ -21,12 +21,6 @@ module.exports = function (sequelize, Sequelize) {
       course_fk: {
         type: Sequelize.STRING(45),
         allowNull: true,
-        // references: {
-        //   model: {
-        //     tableName: 'course_info',
-        //   },
-        //   key: 'course_id'
-        // }
       },
       course_score: {
         type: Sequelize.INTEGER(11),

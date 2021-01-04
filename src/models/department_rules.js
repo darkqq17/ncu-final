@@ -10,12 +10,6 @@ module.exports = function(sequelize, DataTypes) {
     department_fk: {
       type: DataTypes.INTEGER(11),
       allowNull: true,
-      references: {
-        model: {
-          tableName: 'department_info',
-        },
-        key: 'department_id'
-      }
     },
     rule_type: {
       type: DataTypes.STRING(45),

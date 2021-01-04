@@ -39,6 +39,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.INTEGER(11),
       allowNull: true
     },
+    course_class_time: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
     course_limit: {
       type: DataTypes.INTEGER(11),
       allowNull: true

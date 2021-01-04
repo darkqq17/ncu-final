@@ -5,86 +5,92 @@ const DepartmentInfo = require("../DepartmentController/common");
 const sequelize = require("../../database");
 const selected_course = require("../../models/selected_course");
 require("../../database.js");
+
 // const fs = require("fs");
 
 
-async function check() {
-  switch (rule) {
-    case "All_PASS": {
-      return course.filter(
-        (courseID) => UserInfo.getCourseScore(courseID) < 60
-      );
-    }
-    case "HAS_SELECTED": {
-      return course.filter(
-        (courseID) => UserInfo.getCourseScore(courseID) !== -1
-      );
-    }
-  }
+async function createDepartmentRule(ctx) {
+    let resp = {};
+    await DepartmentRule.create({
+        rule_id: ctx.request.body.rule_id,
+        department_fk: ctx.request.body.department_fk,
+        rule_type: ctx.request.body.rule_type,
+        rule_content: ctx.request.body.rule_content
+    }).then((obj) => {
+        console.log("success.....", obj);
+        resp = {
+            status: "success",
+            data: obj
+        }
+    }).catch((err) => {
+        console.log("error....", err);
+        resp = {
+            status: "fail",
+            data: null
+        }
+    });
+
+    ctx.body = resp;
 }
-
-DepartmentInfo.hasMany(UserInfo,
-  {
-    // foreignkey: 'user_id',
-    as: 'Department'
-  })
-UserInfo.belongsTo(DepartmentInfo,
-  {
-    as: 'User'
-  })
-
-  DepartmentInfo.hasOne(DepartmentRule,
-    {
-      // foreignkey: 'user_id',
-      as: 'Rule'
-    })
-  DepartmentRule.belongsTo(DepartmentInfo,
-    {
-      as: 'Department'
-    })
-
-
-
 
 
 async function userdepartment(ctx) {
-
-  const UserDEP = await UserInfo.findAll(
-    {
-      subQuery: false,
-      // raw: true,
-      attributes: [
-        'user_id', 'user_realname'
-      ],
-      include: [
+    DepartmentInfo.hasMany(UserInfo,
         {
-          model: DepartmentInfo,
-          required: false,
-          as: 'User',
-          attributes: ['department_name'],
-          include: [
-            {
-              model: DepartmentRule,
-              required: false,
-              as: 'Rule',
-              attributes: ['rule_type','rule_content']
-            }
-          ]
-        },
-      ]
-    }
-  )
+            // foreignkey: 'user_id',
+            as: 'Department'
+        })
+    UserInfo.belongsTo(DepartmentInfo,
+        {
+            as: 'User'
+        })
 
-  ctx.body = UserDEP
-    ? {
-      status: "success",
-      data: UserDEP
-    }
-    : {
-      status: "failed",
-      data: null
-    }
+    DepartmentInfo.hasOne(DepartmentRule,
+        {
+            // foreignkey: 'user_id',
+            as: 'Rule'
+        })
+    DepartmentRule.belongsTo(DepartmentInfo,
+        {
+            as: 'Department'
+        })
+    const UserDEP = await UserInfo.findAll(
+        {
+            subQuery: false,
+            // raw: true,
+            attributes: [
+                'user_id', 'user_realname'
+            ],
+            include: [
+                {
+                    model: DepartmentInfo,
+                    required: false,
+                    as: 'User',
+                    attributes: ['department_name'],
+                    include: [
+                        {
+                            model: DepartmentRule,
+                            required: false,
+                            as: 'Rule',
+                            attributes: ['rule_type', 'rule_content']
+                        }
+                    ]
+                },
+            ]
+        }
+    )
+
+    ctx.body = UserDEP
+        ? {
+            status: "success",
+            data: UserDEP
+        }
+        : {
+            status: "failed",
+            data: null
+        }
 }
+
 // async function selectedcourseuser(ctx) {
 //   db.user
 //     .findAll({
@@ -118,7 +124,6 @@ async function userdepartment(ctx) {
 // }
 
 
-
 //1 source  =>1 target        target  is the model that contains a foreign id/key).
 
 /*const users = await DepartmentRule.findAll({ include : Course });
@@ -126,10 +131,9 @@ console.log(JSON.stringify(users, null, 2));
 */
 
 module.exports = {
-  userdepartment,
-  check,
+    userdepartment,
+    createDepartmentRule,
 };
-
 
 
 /*const newDepartment = {

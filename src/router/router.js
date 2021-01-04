@@ -5,7 +5,6 @@ const DepartmentController = require("../controllers/DepartmentController");
 const UserController = require("../controllers/UserController");
 const DepartmentruleController = require("../controllers/DepartmentRulesController");
 const CourseController = require("../controllers/CourseController");
-const DepartmentRulesController = require("../controllers/DepartmentRulesController");
 const SelectedCourseController = require("../controllers/SelectedCourseController")
 
 const router = new Router({
@@ -14,8 +13,10 @@ const router = new Router({
 
 // DepartmentInfo
 router
-  .get("/department/all", DepartmentController.readAllDepartment)
-  .put("/department", DepartmentController.createDepartment);
+  .get("/department/read", DepartmentController.readAllDepartment)
+  .put("/department/create", DepartmentController.createDepartment)
+  .put('/departmemt/delete', DepartmentController.deleteDepartment)
+  .patch('/departmemt/update', DepartmentController.updateDepartment)
 
 // CourseInfo
 router
@@ -23,24 +24,25 @@ router
   .get('/course/read', CourseController.readAllCourse)
   .put('/course/update', CourseController.updateCourse)
   .put('/course/delete', CourseController.deleteCourse)
-  .get('/course/findall', CourseController.findallCourse)
 
 // UserInfo
 router
-  .put('/user', UserController.createUser)
+  .put('/user/create', UserController.createUser)
   .patch('/user/update', UserController.updateUser)
   .delete('/user/delete', UserController.deleteUser)
-  .post('/login', UserController.authUser)
+  .post('/user/login', UserController.authUser)
+  .get("/user/read", UserController.readAllUser)
   
 //DepartmentRule
 router
-  .get("/departmentrule/all", DepartmentruleController.readAllRule)
-  .get("/departmentrule/user/rule", DepartmentruleController.check)
-  .get("/departmentrule/user/dep", DepartmentruleController.userdepartment)
-
+  .get("/departmentrule/read", DepartmentruleController.readAllRule)
+  .put("/departmentrule/create", DepartmentruleController.createDepartmentRule)
+  .put('/departmemtrule/delete', DepartmentruleController.deleteDepartmentRule)
+  .patch('/departmemtrule/update', DepartmentruleController.updateDepartmentRule)
+  
 //SelectedCourse
 router
-  .get('/selected/userselected', SelectedCourseController.userselected)
+  .get('/selected/read', SelectedCourseController.userselected)
   .put('/selected/create', SelectedCourseController.createSelectedCourse)
   .delete('/selected/delete', SelectedCourseController.deleteSelectedCourse)
   .patch('/selected/update', SelectedCourseController.updateSelectedCourse)
